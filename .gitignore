@@ -1,21 +1,57 @@
-# OS
-.DS_Store
-
-# Python
+# -----------------------------
+# Python / Django
+# -----------------------------
 __pycache__/
-*.pyc
-.env
-venv/
-.env.*
-
-# Node
-node_modules/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
 dist/
 build/
+.eggs/
+
+# Virtual env
+venv/
+.venv/
+env/
+ENV/
+pip-wheel-metadata/
 
 # Django
-db.sqlite3
-media/
-
-# Logs
 *.log
+local_settings.py
+db.sqlite3
+
+# Migrations (keep migrations in repo usually, so NOT ignored)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# -----------------------------
+# Node / React / Vite
+# -----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite build output
+dist/
+
+# -----------------------------
+# OS / Editor junk
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -----------------------------
+# Env files
+# -----------------------------
+.env
+.env.*
