@@ -1,6 +1,14 @@
-# Task Dependency Tracker (INMUTO SDE Intern Assignment)
+# Task Dependency Tracker
 
 A full-stack **Task Dependency Tracker** that lets users create tasks, add dependencies between them, prevents circular dependencies using a **DFS graph cycle detection algorithm**, auto-updates task status based on dependency rules, and visualizes dependencies using a **custom SVG graph renderer** (no external graph libraries).
+
+---
+
+## 🌐 Live Demo
+
+- **Frontend (Vercel):** https://task-dependency.vercel.app
+- **Backend (Render):** https://inmuto-task-backend.onrender.com
+- **Backend API Base (Prod):** https://inmuto-task-backend.onrender.com/api
 
 ---
 
@@ -48,7 +56,7 @@ A full-stack **Task Dependency Tracker** that lets users create tasks, add depen
 - Django
 - Django REST Framework
 - django-cors-headers
-- MySQL (or SQLite for local testing)
+- MySQL (local optional) / SQLite fallback
 
 ### Frontend
 - React 18
@@ -98,7 +106,7 @@ cd backend
 python -m venv venv
 source venv/bin/activate      # mac/linux
 # OR
-venv\Scripts\activate        # windows
+venv\Scripts\activate       # windows
 ```
 
 ### 3) Install dependencies
@@ -106,18 +114,11 @@ venv\Scripts\activate        # windows
 pip install -r requirements.txt
 ```
 
-### 4) Configure DB
-Update DB config in:
-```
-backend/config/settings.py
-```
+### 4) Database configuration (Evaluator-friendly)
+This project is designed to be **plug-and-play** for evaluators.
 
-If you are using **MySQL**, ensure you created DB first:
-```sql
-CREATE DATABASE inmuto_tasks;
-```
-
-If you prefer quick testing, you can use SQLite.
+✅ Default: **SQLite** (no setup required)  
+Optional: MySQL can be enabled locally via `.env`.
 
 ### 5) Apply migrations
 ```bash
@@ -130,7 +131,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Backend will run at:
+Backend will run locally at:
 ```
 http://127.0.0.1:8000/
 ```
@@ -151,9 +152,23 @@ npm install
 npm run dev
 ```
 
-Frontend will run at:
+Frontend will run locally at:
 ```
 http://localhost:5173/
+```
+
+---
+
+## 🔧 Frontend API Configuration (Evaluator + Deploy friendly)
+
+The frontend reads backend URL from env variable:
+
+- Uses `VITE_API_BASE_URL` if provided
+- Else defaults to local backend: `http://127.0.0.1:8000/api`
+
+Example `.env` for frontend (do not commit `.env`):
+```env
+VITE_API_BASE_URL=https://inmuto-task-backend.onrender.com/api
 ```
 
 ---
@@ -170,7 +185,7 @@ npm run build
 npm run preview
 ```
 
-Preview will run at:
+Preview runs at:
 ```
 http://localhost:4173/
 ```
@@ -179,10 +194,14 @@ http://localhost:4173/
 
 ## 🔌 API Endpoints (Backend)
 
+### Base URLs
+- Local: `http://127.0.0.1:8000/api`
+- Production: `https://inmuto-task-backend.onrender.com/api`
+
 ### Tasks
 - `GET /api/tasks/` → list all tasks
 - `POST /api/tasks/` → create task
-- `PATCH /api/tasks/{task_id}/` → update task status
+- `PATCH /api/tasks/{task_id}/` → update task status/title/description
 - `DELETE /api/tasks/{task_id}/` → delete task
 
 ### Task Dependencies
@@ -226,18 +245,25 @@ When adding dependency:
 
 ## 🚀 Deployment Notes
 
-Frontend can be deployed on:
-- Netlify
-- Vercel
+### Backend (Render)
+- Build command:
+  ```bash
+  pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+  ```
+- Start command:
+  ```bash
+  gunicorn config.wsgi:application
+  ```
 
-Backend can be deployed on:
-- Render
-- Railway
-
-Make sure to allow CORS for deployed frontend domain in backend settings.
+### Frontend (Vercel)
+- Set root directory: `frontend`
+- Build: `npm run build`
+- Output: `dist`
+- Env:
+  - `VITE_API_BASE_URL=https://inmuto-task-backend.onrender.com/api`
 
 ---
 
 ## 👨‍💻 Author
-**Daanu18**
+**Daanu18**  
 Built for INMUTO SDE Intern Assignment.
