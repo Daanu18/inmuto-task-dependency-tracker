@@ -10,6 +10,9 @@ __pycache__/
 dist/
 build/
 .eggs/
+.pytest_cache/
+coverage/
+htmlcov/
 
 # Virtual env
 venv/
@@ -22,22 +25,18 @@ pip-wheel-metadata/
 *.log
 local_settings.py
 db.sqlite3
-
-# Migrations (keep migrations in repo usually, so NOT ignored)
-# */migrations/*.py
-# !*/migrations/__init__.py
+staticfiles/
 
 # -----------------------------
 # Node / React / Vite
 # -----------------------------
 node_modules/
+dist/
+.vite/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
-# Vite build output
-dist/
 
 # -----------------------------
 # OS / Editor junk
@@ -55,3 +54,9 @@ Thumbs.db
 # -----------------------------
 .env
 .env.*
+
+# -----------------------------
+# DB dumps
+# -----------------------------
+*.sql
+*.dump
